@@ -46,6 +46,7 @@
     "react-native-fbsdk": "^1.1.2",
     "react-native-general-calendars": "^1.11.0",
     "react-native-gesture-handler": "^1.6.1",
+    "react-native-image-crop-picker": "^0.35.2",
     "react-native-image-picker": "^2.3.1",
     "react-native-keyboard-aware-scroll-view": "^0.9.1",
     "react-native-linear-gradient": "^2.5.6",

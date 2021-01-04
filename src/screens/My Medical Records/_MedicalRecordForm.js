@@ -184,7 +184,7 @@ function _MedicalRecordForm(props) {
 
         let f = [...file];
         const source = {
-          FileName: response.fileName,
+          FileName: response.fileName ? response.fileName : '',
           FileSize: response.fileSize,
           FileType: response.type,
           FileAsBase64: response.data,
