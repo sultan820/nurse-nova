@@ -322,13 +322,15 @@ function _MedicalReminderList(props) {
   return (
     <View style={Styles.mainContainer}>
       {List.length > 0 && (
-        <FlatList
-          data={List}
-          renderItem={renderRow}
-          refreshControl={
-            <RefreshControl onRefresh={getProfiles} refreshing={loader} />
-          }
-        />
+        <View style={{flex: 1, marginTop: Platform.OS == 'android' ? 20 : 0}}>
+          <FlatList
+            data={List}
+            renderItem={renderRow}
+            refreshControl={
+              <RefreshControl onRefresh={getProfiles} refreshing={loader} />
+            }
+          />
+        </View>
       )}
       {loader && List.length == 0 && (
         <View style={Styles.mainContainer}>
