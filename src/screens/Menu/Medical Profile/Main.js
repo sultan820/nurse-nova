@@ -266,12 +266,25 @@ export default function main(props) {
               </Row>
               <Row>
                 <Text style={{fontSize: 20}}>
-                  {profile.caffeineDrinker ? 'Yes' : 'No'},{' '}
-                  {profile.caffeinePerDay}
+                  {profile.caffeineDrinker ? 'Yes' : 'No'}
                 </Text>
               </Row>
             </Col>
           </Row>
+          {profile.caffeineDrinker && (
+            <Row style={{marginTop: 10}}>
+              <Col>
+                <Row>
+                  <Text style={{color: '#4B4F56'}}>
+                    How many cups of caffeine you drink per day?
+                  </Text>
+                </Row>
+                <Row>
+                  <Text style={{fontSize: 20}}>{profile.caffeinePerDay}</Text>
+                </Row>
+              </Col>
+            </Row>
+          )}
           <Row style={{marginTop: 10}}>
             <Col>
               <Row>
