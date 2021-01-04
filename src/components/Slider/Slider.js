@@ -164,7 +164,7 @@ class Slider extends PureComponent {
           padding: wp('5%'),
         }}>
         <View style={{flex: 3}}>
-          <View style={{flex: 1, flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row'}}>
             <View style={{flex: 1.5, justifyContent: 'center'}}>
               <LinearGradient
                 colors={['#044DC1', '#3BBFE3']}
@@ -228,7 +228,11 @@ class Slider extends PureComponent {
               </Text>
             </View>
           </View>
-          <View style={{flex: 1}}>
+          <View
+            style={{
+              marginTop: 5,
+              justifyContent: 'center',
+            }}>
             <Text style={styles.medicine}>{item.medicineName}</Text>
           </View>
           <View style={{flex: 1}}>
@@ -436,7 +440,7 @@ const styles = StyleSheet.create({
   },
   medicine: {
     fontSize: 18,
-    marginTop: 5,
+    marginTop: 10,
     fontWeight: 'normal',
     color: '#020202',
   },
