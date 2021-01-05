@@ -12,7 +12,7 @@ import {
   Text as Texts,
 } from '@ui-kitten/components';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import ImagePicker from 'react-native-image-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -168,50 +168,57 @@ const AddNewArticle = (props) => {
   };
 
   const openImageLibrary = () => {
-    ImagePicker.launchImageLibrary(options, (response) => {
-      console.log('Selected File: ', response);
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      } else {
-        let f = [...file];
-        const source = {
-          FileName: response.fileName,
-          FileSize: response.fileSize,
-          FileType: response.type,
-          FileAsBase64: response.data,
-        };
-        f.push({File: source, uri: response.uri});
-        setFile(f);
-        setVisible(false);
-      }
+    ImagePicker.openPicker({
+      width: 400,
+      height: 400,
+      includeBase64: true,
+      includeExif: true,
+    }).then((image) => {
+      console.log('picked image ', image);
+
+      let uri = `data:${image.mime};base64,` + image.data;
+      let finalUri =
+        Platform.OS === 'ios' ? uri.replace('file://', '/private') : uri;
+      console.log('uri picked ', uri);
+      console.log('uploadUri ', finalUri);
+
+      let f = [...file];
+      const source = {
+        FileName: image.filename,
+        FileSize: image.size,
+        FileType: image.mime,
+        FileAsBase64: image.data,
+      };
+
+      f.push({File: source, uri: finalUri});
+      setFile(f);
+      setVisible(false);
     });
   };
 
   const openCamera = () => {
-    ImagePicker.launchCamera(options, (response) => {
-      console.log('Selected File: ', response);
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      } else {
-        let f = [...file];
-        const source = {
-          FileName: response.fileName,
-          FileSize: response.fileSize,
-          FileType: response.type,
-          FileAsBase64: response.data,
-        };
-        f.push({File: source, uri: response.uri});
-        setFile(f);
-        setVisible(false);
-      }
+    ImagePicker.openCamera({
+      width: 400,
+      height: 400,
+      includeBase64: true,
+      includeExif: true,
+    }).then((image) => {
+      let uri = `data:${image.mime};base64,` + image.data;
+      let finalUri =
+        Platform.OS === 'ios' ? uri.replace('file://', '/private') : uri;
+      console.log('uri picked ', uri);
+      console.log('uploadUri ', finalUri);
+      let f = [...file];
+      const source = {
+        FileName: image.filename,
+        FileSize: image.size,
+        FileType: image.mime,
+        FileAsBase64: image.data,
+      };
+
+      f.push({File: source, uri: finalUri});
+      setFile(f);
+      setVisible(false);
     });
   };
 
@@ -251,7 +258,7 @@ const AddNewArticle = (props) => {
   };
 
   const createArticle = async () => {
-    setLoading(true);
+    // setLoading(true);
     let topic = displayValue.topic;
     if (newTopic) {
       topic = await createNewTopic();
@@ -300,6 +307,8 @@ const AddNewArticle = (props) => {
             }
           });
       } else {
+        console.log('formdata ', formData);
+
         auth
           .createArticle(formData)
           .then((res) => res.json())

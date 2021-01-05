@@ -29,7 +29,7 @@ import DashboardStackHeader from '../../components/header/DashboardStackHeader';
 import {} from 'react-native-paper';
 import DeleteModal from '../../components/DeleteModal';
 import {IMAGE_URL} from '../../API_URI';
-// import PushNotification from 'react-native-push-notification'
+import PushNotification from 'react-native-push-notification';
 
 const {icons} = images;
 
@@ -217,7 +217,7 @@ function _MedicalReminderList(props) {
         .then((res) => res.json())
         .then((res) => {
           ids.forEach((item) => {
-            // PushNotification.cancelLocalNotifications({ id: item });
+            PushNotification.cancelLocalNotifications({id: item});
           });
           getProfiles();
         });

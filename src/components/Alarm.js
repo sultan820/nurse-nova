@@ -1,4 +1,4 @@
-// import PushNotification from 'react-native-push-notification'
+import PushNotification from 'react-native-push-notification'
 import AsyncStorage from '@react-native-community/async-storage';
 
 export function Alarm(props) {

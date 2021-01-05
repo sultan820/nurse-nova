@@ -22,7 +22,7 @@ import {useFocusEffect} from '@react-navigation/native';
 import {icons} from '../../constants/images';
 import langjson from '../../constants/lang.json';
 import messaging from '@react-native-firebase/messaging';
-// import PushNotification from 'react-native-push-notification'
+import PushNotification from 'react-native-push-notification';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -158,12 +158,12 @@ const Home = (props) => {
           return;
         }
       }
-      // PushNotification.localNotification({
-      //     /* Android Only Properties */
-      //     title: remoteMessage.notification.title, // (optional)
-      //     message: remoteMessage.notification.body, // (required)
-      //     actions: remoteMessage.notification.actions,
-      // });
+      PushNotification.localNotification({
+        /* Android Only Properties */
+        title: remoteMessage.notification.title, // (optional)
+        message: remoteMessage.notification.body, // (required)
+        actions: remoteMessage.notification.actions,
+      });
     });
 
     return unsubscribe;

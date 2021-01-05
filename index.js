@@ -9,35 +9,43 @@ import {store} from './src/redux/store/store';
 import App from './App';
 import {name as appName} from './app.json';
 import messaging from '@react-native-firebase/messaging';
-// import PushNotification, { PushNotificationScheduleObject } from "react-native-push-notification";
+import PushNotification, {
+  PushNotificationScheduleObject,
+} from 'react-native-push-notification';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as RootNavigation from './src/navigation/RootNavigation';
 
-// PushNotification.configure({
-//     onRegister: function (token) {
-//         console.log("TOKEN:", token);
-//       },
+PushNotification.configure({
+  onRegister: function (token) {
+    console.log('TOKEN:', token);
+  },
 
-//     onNotification: function(notification) {
-//         PushNotification.invokeApp(notification);
-//         console.log('LOCAL NOTIFICATION ==>', notification)
-//         RootNavigation.navigate('clock', {id: notification.id, action:notification.action});
-//       },
-//     onAction: function (notification) {
-//         // if(AppState.currentState=="inactive"){
-//         //     PushNotification.invokeApp(notification);
-//         // }
-//     PushNotification.invokeApp(notification);
-//       console.warn("ACTION:", notification.action);
-//       RootNavigation.navigate('clock', {id: notification.id, action : notification.action});
-//       console.log("NOTIFICATION:", notification);
-//     },
-//     onRegistrationError: function(err) {
-//     //  console.error(err.message, err);
-//     },
-//     popInitialNotification: true,
-//     requestPermissions: true
-//   });
+  onNotification: function (notification) {
+    PushNotification.invokeApp(notification);
+    console.log('LOCAL NOTIFICATION ==>', notification);
+    RootNavigation.navigate('clock', {
+      id: notification.id,
+      action: notification.action,
+    });
+  },
+  onAction: function (notification) {
+    // if(AppState.currentState=="inactive"){
+    //     PushNotification.invokeApp(notification);
+    // }
+    PushNotification.invokeApp(notification);
+    console.warn('ACTION:', notification.action);
+    RootNavigation.navigate('clock', {
+      id: notification.id,
+      action: notification.action,
+    });
+    console.log('NOTIFICATION:', notification);
+  },
+  onRegistrationError: function (err) {
+    //  console.error(err.message, err);
+  },
+  popInitialNotification: true,
+  requestPermissions: true,
+});
 
 // Register background handler
 messaging().setBackgroundMessageHandler(async (remoteMessage) => {
@@ -67,12 +75,12 @@ messaging().setBackgroundMessageHandler(async (remoteMessage) => {
       return;
     }
   }
-  // PushNotification.localNotification({
-  //     /* Android Only Properties */
-  //     title: remoteMessage.notification.title, // (optional)
-  //     message: remoteMessage.notification.body, // (required)
-  //     actions: remoteMessage.notification.actions,
-  // });
+  PushNotification.localNotification({
+    /* Android Only Properties */
+    title: remoteMessage.notification.title, // (optional)
+    message: remoteMessage.notification.body, // (required)
+    actions: remoteMessage.notification.actions,
+  });
 });
 
 export default class NurseNova extends Component {
